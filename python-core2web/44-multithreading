@@ -1,0 +1,408 @@
+# /usr/lib/python3.10/threading.python3  - threading.py file aste 
+
+
+
+#------------------
+print("start code")
+def fun():
+    print("in fun")
+print()
+fun()
+
+#---------
+
+import threading
+
+print("start code")
+
+def fun():
+    print("in fun")
+
+print(threading.current_thread().name)
+fun()   
+
+ #-------------------------------
+
+
+
+import threading,os
+
+print("one")
+print("two")
+print("three")
+
+print(os.getpid())   # pvm process id
+print(threading.current_thread().name)     #mainThread
+
+#-------------------------------
+
+
+#single thread - main thread
+
+#--
+
+import threading
+
+def fun():
+    print("in fun function")
+    print(threading.current_thread().name)
+
+def mun():
+    print("in mun function")
+    print(threading.current_thread().name)
+
+print(threading.current_thread().name)
+mun()
+fun()
+
+#---------
+#----------
+
+import threading
+def fun():
+    print("in fun function")
+    print(threading.current_thread().name)
+    for i in range(6):
+        print("in fun")
+
+def mun():
+    print("in mun function")
+    print(threading.current_thread().name)
+    for i in range(6):
+        print("in mun")
+
+print(threading.current_thread().name)
+
+t1 = threading.Thread(target= fun)
+t2 = threading.Thread(target=mun)
+
+t1.start()
+t2.start()
+#----------------------------
+
+import threading
+
+def fun(x,y):
+    print("in fun function")
+    print(threading.current_thread().name)
+    print(x)
+    print(y)
+
+def mun():
+    print("in mun function")
+    print(threading.current_thread().name)
+    for i in range(6):
+        print("in mun")
+
+print(threading.current_thread().name)
+
+t1 = threading.Thread(target= fun, args=[10,20])
+t2 = threading.Thread(target= mun)
+
+t1.start()
+t2.start()
+
+#-----------
+
+
+#============================================================================================
+
+# LECTURE 2 - MULTI THREADING 
+
+#=============================================================================================
+
+import threading
+from threading import Thread
+
+
+def display():
+    print("in display")
+    print(threading.current_thread().name)
+
+print("start code")
+t1 = Thread(target=display)
+t1.start()
+print("end code ")
+
+#--------------------------
+
+
+import threading
+
+print("start code")
+print(threading.current_thread())
+print(threading.current_thread().name)    # name of thread
+print(threading.current_thread().ident)   # id of thread
+
+#-------------------------
+
+# daemon thread 
+
+#-------------------------
+
+import threading
+from threading import Thread
+
+print(type(threading.current_thread()))
+t1 = Thread()
+print(type(t1))
+
+#--
+
+import threading
+from threading import Thread
+import time # for sleep
+
+class demo():
+    def fun(self):
+        time.sleep(5)
+        print("in fun")
+        print(threading.current_thread().name)
+
+    def gun(self):
+        time.sleep(3)
+        print("in fun")
+        print(threading.current_thread().name)
+
+print("main thread")
+obj = demo()
+
+t1 = Thread(target=obj.fun,daemon=True)
+t2 = Thread(target=obj.gun)
+
+t1.start()
+t2.start()
+
+print("end main")
+
+t1.join()   # main therad wait for daemon thread
+
+#============================================================================================
+
+# LECTURE 3 - THREAD 
+
+#============================================================================================
+# code 3 
+
+from threading import * 
+
+class railway:
+    def __init__(self,availableseats):
+        self.availableseats = availableseats
+
+    def reserve(self,seatcounts):
+        print("available seats :",self.availableseats)
+        print(current_thread().name)
+        self.availableseats -= 1
+
+obj=railway(1)
+t1=Thread(target=obj.reserve,args=[1],name="kanha")
+t2=Thread(target=obj.reserve,args=[1],name="kanha2")
+t3=Thread(target=obj.reserve,args=[1],name="kanha3")
+
+t1.start()
+t2.start()
+t3.start()
+
+#---------------
+from threading import * 
+import time
+
+class railway:
+    def __init__(self,availableseats):
+        self.availableseats = availableseats
+
+    def reserve(self,seatcounts):
+        print("available seats :",self.availableseats)
+        print(current_thread().name)
+        time.sleep(0.5)
+        self.availableseats -= 1
+
+obj=railway(1)
+t1=Thread(target=obj.reserve,args=[1],name="kanha")
+t2=Thread(target=obj.reserve,args=[1],name="kanha2")
+t3=Thread(target=obj.reserve,args=[1],name="kanha3")
+
+t1.start()
+t2.start()
+t3.start()
+#--------------------------------------------
+
+from threading import *
+
+import time
+
+def fun(x,y):
+    print("in fun")
+    print(current_thread().name)
+
+t1=Thread(target=fun)
+t2=Thread(target=fun)
+
+t1.start()
+t2.start()
+
+#-----------------------------
+
+
+from threading import *
+
+import time
+
+def fun(x,y):
+    print("in fun")
+    time.sleep(2)
+    print(current_thread().name)
+
+t1=Thread(target=fun)
+t2=Thread(target=fun)
+
+t1.start()
+t2.start()
+
+#---------------------------------
+
+#passing parameters
+
+
+
+from threading import *
+
+import time
+
+def fun(x,y):
+    print("in fun")
+    print(x+y)
+    time.sleep(2)
+    print(current_thread().name)
+
+t1=Thread(target=fun,args=[10,20],name="c2w")
+t2=Thread(target=fun,args=[20,30],name="bie")
+
+t1.start()
+t2.start()
+
+#---------------------------
+
+#---------------thread synchronization
+
+# 1. lock  ---- 1.lock 2.rlock
+# 2. semaphore 
+
+def infofriends(name,comp,sal):
+    print(name)
+    print(comp)
+    print(sal)
+
+t1 = Thread(target=infofriends,args=("kanha","infosys",2.0))
+t2 = Thread(target=infofriends,args=("kanaiya","techsys",3.0))
+
+t1.start()
+t2.start()
+
+
+#--------------------------------------------------
+from threading import *
+
+def infofriends(name,comp,sal):
+    print(name)
+    print(comp)
+    print(sal)
+
+t1 = Thread(target=infofriends,args=("kanha","infosys",2.0))
+t2 = Thread(target=infofriends,args=("kanaiya","techsys",3.0))
+
+t1.start()
+t2.start()
+
+#---------------------------
+from threading import *
+import time
+
+def infofriends(name,comp,sal):
+    print("in fun")
+    time.sleep(2)
+    print(current_thread().name,":",name," ",comp," ",sal)
+       
+
+t1 = Thread(target=infofriends,args=("kanha","infosys",2.0))
+t2 = Thread(target=infofriends,args=("kanaiya","techsys",3.0))
+
+t1.start()
+t2.start()
+
+#---------------------------
+from threading import *
+import time
+
+lockobj = Lock()   # lock class 
+
+def infofriends(name,comp,sal):
+
+    lockobj.aquire()                                              # lock
+    print("in fun")
+    time.sleep(2)
+    print(current_thread().name,":",name," ",comp," ",sal)
+    lockobj.release()                                             # realese
+
+t1 = Thread(target=infofriends,args=("kanha","infosys",2.0))
+t2 = Thread(target=infofriends,args=("kanaiya","techsys",3.0))
+
+
+t1.start()
+t2.start()
+
+#---------------------------
+from threading import *
+import time
+
+lockobj = Lock()   # lock class 
+
+def infofriends(name,comp,sal):
+    print("waiting for lock--")
+    lockobj.aquire()                                              # lock
+    print("in fun")
+    time.sleep(2)
+    print(current_thread().name,":",name," ",comp," ",sal)
+    lockobj.release()                                             # realese
+
+t1 = Thread(target=infofriends,args=("kanha","infosys",2.0))
+t2 = Thread(target=infofriends,args=("kanaiya","techsys",3.0))
+t3 = Thread(target=infofriends,args=("kana","techs",4.0))
+
+t1.start()
+t2.start()
+t3.start()
+
+#---------------------------
+
+from threading import *
+import time
+
+runs = 250
+lockobj = Lock()
+
+def playerdata(pruns):
+    global runs
+
+    print("in playerdata function")
+    
+    lockobj.acquire()
+
+    time.sleep(1)
+    print(runs)
+    runs = runs + pruns
+    
+    lockobj.release()
+    
+    print(current_thread().name)
+
+t1= Thread(target=playerdata,args=[50],name="rohit")
+t2= Thread(target=playerdata,args=[70],name="virat")
+
+t1.start()
+t2.start()
+
+
+#-----------------------
+

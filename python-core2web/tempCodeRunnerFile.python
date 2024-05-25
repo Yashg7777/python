@@ -1,0 +1,26 @@
+from threading import *
+import time
+
+runs = 250
+lockobj = Lock()
+
+def playerdata(pruns):
+    global runs
+    
+    print("in playerdata function")
+    
+    lockobj.acquire()
+
+    time.sleep(1)
+    print(runs)
+    runs = runs + pruns
+    
+    lockobj.release()
+    
+    print(current_thread().name)
+
+t1= Thread(target=playerdata,args=[50],name="rohit")
+t2= Thread(target=playerdata,args=[70],name="virat")
+
+t1.start()
+t2.start()
